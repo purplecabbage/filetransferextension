@@ -1,0 +1,57 @@
+The filetransfer command provides a way to upload and download files over the internet.
+
+Transfers are performed asynchronously in the background, and accessible from a javascript interface.
+
+Sample user:
+
+DOWNLOAD:
+
+- srcURL : where to get the file from
+- destFilePath : where to put the file ( currently ALWAYS in the documents directory )
+- completeCallback : function to call on success
+- errorCallback    : function to call on error
+ex.
+navigator.plugins.fileTransfer.download("http://www.c925.com/files/u7/golden-retriever-puppies.jpg",
+                                        "puppy.jpg",
+                                        onDownloadComplete,                      
+                                        onDownloadError);
+
+function onDownloadComplete(id,fileSize)
+{
+    document.getElementById("resultList").innerHTML += "<li>onDownloadComplete : " + id + " Bytes=" + fileSize +"</li>";
+}
+
+function onDownloadError(err)
+{
+    alert("onDownloadError " + err);
+}
+
+UPLOAD:
+- srcFilePath : where to get the file from ( currently ALWAYS in the documents directory )
+- destURL : where to POST the file to
+- headers : an object that contains properties that the server requires to process the POST request
+- successHandler : callback function called on success
+- errorHandler   : callback function called on error
+ex.
+navigator.plugins.fileTransfer.upload("javatar.jpg",
+				      "http://api.twitpic.com/upload.xml",
+				      {username:"USERNAME",password:"PASSWORD"},
+				      onUploadComplete,
+				      onUploadError);
+
+// response str in the actual response returned by the server, so 
+// the request may still have failed, your code will likely vary depending on the api you are connecting to.
+function onUploadComplete(filename,responseStr,tBytes)
+{
+    //alert("onComplete : " + filename + " Bytes=" + fileSize);
+    var outStr = responseStr.split("<").join("&lt;").split(">").join("&gt;");
+    document.getElementById("resultList").innerHTML += "<li> sent: " + outStr + "</li>";
+}
+
+function onUploadError(msg)
+{
+    alert("Error : " + msg);
+}
+
+
+
