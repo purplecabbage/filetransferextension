@@ -5,7 +5,7 @@ build
 *xcodeproj/project.xcworkspace
 *xcodeproj/xcuserdata
 *tmproj
-iOS/ASI/.DS_Store
+.DS_Store
 profile
 *.pbxuser
 *.mode1v3
